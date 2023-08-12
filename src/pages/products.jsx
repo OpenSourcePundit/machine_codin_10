@@ -1,4 +1,5 @@
 import { React, useState } from "react";
+import { v4 as uuid } from 'uuid';
 import { useData } from "../context/data-context";
 import { useNavigate } from "react-router-dom";
 import { SideBar } from "../components/sidebar";
@@ -13,16 +14,57 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import "./products.css";
 
 export const ProductsPage = () => {
-    let value="";
 
   const navigate = useNavigate();
   const { department, Data, Departments, setDepartment, sortBy, dispatch } =
     useData();
     const [showModal, setShowModal] = useState(false);
+    const [Fdept,setFdept] = useState('none');
+    const [Fname,setFname] = useState('');
+    const [Fdescription,setFdescription] = useState('');
+    const [Fprice,setFprice] = useState('');
+    const [Fstock,setFstock] = useState('');
+    const [Fsku,setFsku] = useState('');
+    const [Fsupplier,setFsupplier] = useState('');
+    const [Fdelivered,setFdelivered] = useState(0);
+    const [FimageURL,setFimageURL] = useState('');
+    const clearData = () =>{setFdept('none');
+    setFname('');
+    setFdescription('');
+    setFprice('');
+    setFstock('');
+    setFsku('');
+    setFsupplier('');
+    setFdelivered(0);
+    setFimageURL('');}
 
-    const handleClose = () => setShowModal(false);
+
+
+
+
+
+
+
+    const handleClose = () => {clearData();setShowModal(false)};
     const handleShow = () => setShowModal(true);
-    const addProduct = () => {setShowModal(false)}
+    const addProduct = () => {
+
+      dispatch({type:"addProduct",payload:{
+        id: uuid(),
+        department:Fdept,
+        name: Fname,
+        description:
+        Fdescription,
+        price:Number(Fprice),
+        stock: Number(Fstock),
+        sku:Number(Fsku),
+        supplier: Fsupplier,
+        delivered: Fdelivered,
+        imageUrl: FimageURL,
+      }})
+      clearData();
+      setShowModal(false)
+    }
 //   const [finalData, setFinalData] = useState(Data);
 
 //   const DepartmentClickHandler = () => {
@@ -222,55 +264,68 @@ export const ProductsPage = () => {
         <Modal.Header closeButton>
           <Modal.Title>Add New Product</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-
-
+        <Form >
+        <Modal.Body>        
         <InputGroup className="mb-3">
         <DropdownButton
           variant="outline-secondary"
           title="Dropdown"
           id="input-group-dropdown-1"
         >
-          {Departments.map((dep)=><Dropdown.Item onClick={()=>setDepartment(dep)} >{dep}</Dropdown.Item>)}
-        </DropdownButton>{console.log("val aa rhe ",value)}
-        <Form.Control aria-label="dropdown button" type = 'text' disabled placeholder={`${department}`}  />
+          {Departments.map((dep)=><Dropdown.Item key={dep} onClick={()=>setFdept(dep)} >{dep}</Dropdown.Item>)}
+        </DropdownButton>
+        <Form.Control aria-label="dropdown button" type = 'text' disabled placeholder={`${Fdept}`}  />
         
       </InputGroup>
       {/* <Form.Control  type = 'text' placeholder={`${department}`}  /> */}
 
       <Form.Label htmlFor="name">Name</Form.Label>
-      <Form.Control
+      <Form.Control 
+        value={Fname}
+        onChange={(e)=>setFname(e.target.value)}
         type="text"
         id="name"
       />
       <Form.Label htmlFor="Description">Description</Form.Label>
       <Form.Control
+        value={Fdescription}
+        onChange={(e)=>setFdescription(e.target.value)}
         type="text"
         id="Description"
       />
       <Form.Label htmlFor="Price">Price</Form.Label>
       <Form.Control
+        value={Fprice}
+        onChange={(e)=>setFprice(e.target.value)}
         type="number"
         id="Price"
         aria-describedby="passwordHelpBlock"
       />
       <Form.Label htmlFor="Stock">Stock</Form.Label>
       <Form.Control
+        value={Fstock}
+        onChange={(e)=>setFstock(e.target.value)}
         type="number"
         id="Stock"
       />
       <Form.Label htmlFor="SKU">SKU</Form.Label>
       <Form.Control
+        value={Fsku}
+        onChange={(e)=>setFsku(e.target.value)}
         type="number"
         id="SKU"
       />
       <Form.Label htmlFor="Supplier">Supplier</Form.Label>
       <Form.Control
+        value={Fsupplier}
+        onChange={(e)=>setFsupplier(e.target.value)}
         type="text"
         id="Supplier"
       />
       <Form.Label htmlFor="Delivered">Delivered</Form.Label>
       <Form.Control
+        value={Fdelivered}
+        onChange={(e)=>setFdelivered(e.target.value)}
         placeholder="0"
         type="number"
         id="Delivered"
@@ -278,6 +333,8 @@ export const ProductsPage = () => {
       />
       <Form.Label htmlFor="ImageURL">ImageURL</Form.Label>
       <Form.Control
+        value={FimageURL}
+        onChange={(e)=>setFimageURL(e.target.value)}
         type="text"
         id="ImageURL"
       />
@@ -292,7 +349,9 @@ export const ProductsPage = () => {
           <Button variant="primary" onClick={addProduct}>
             Add Product
           </Button>
+          
         </Modal.Footer>
+        </Form>
       </Modal>
       </div>
     </div>
