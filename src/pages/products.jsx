@@ -14,17 +14,22 @@ export const ProductsPage = () => {
   const { department, Data, Departments, setDepartment, sortBy, dispatch } =
     useData();
 
-  const [finalData, setFinalData] = useState(Data);
+//   const [finalData, setFinalData] = useState(Data);
 
-  const DepartmentClickHandler = () => {
-    setFinalData(
-      Data.filter((prod) => {
-        return department != "All Departments"
-          ? prod.department == department
-          : 1 == 1;
-      })
-    );
-  };
+//   const DepartmentClickHandler = () => {
+//     setFinalData(
+//       Data.filter((prod) => {
+//         return department != "All Departments"
+//           ? prod.department == department
+//           : 1 == 1;
+//       })
+//     );
+//   };
+  let finalData = Data.filter((prod) => {
+    return department != "All Departments"
+      ? prod.department == department
+      : 1 == 1;
+  })
   let finalDataD = finalData;
   
 //   let finalDataS = sortBy.length === 0? finalDataD: sortBy == "name"? RatingFilter.sort(function (a, b) {
@@ -72,7 +77,7 @@ export const ProductsPage = () => {
               <Dropdown.Item
                 onClick={() => {
                   setDepartment("All Departments");
-                  DepartmentClickHandler();
+                //   DepartmentClickHandler();
                 }}
               >
                 All Departments
@@ -80,7 +85,7 @@ export const ProductsPage = () => {
               <Dropdown.Item
                 onClick={() => {
                   setDepartment("Kitchen");
-                  DepartmentClickHandler();
+                //   DepartmentClickHandler();
                 }}
               >
                 Kitchen
@@ -88,7 +93,7 @@ export const ProductsPage = () => {
               <Dropdown.Item
                 onClick={() => {
                   setDepartment("Clothing");
-                  DepartmentClickHandler();
+                //   DepartmentClickHandler();
                 }}
               >
                 Clothing
@@ -96,7 +101,7 @@ export const ProductsPage = () => {
               <Dropdown.Item
                 onClick={() => {
                   setDepartment("Toys");
-                  DepartmentClickHandler();
+                //   DepartmentClickHandler();
                 }}
               >
                 Toys
