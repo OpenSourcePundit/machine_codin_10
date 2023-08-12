@@ -139,7 +139,7 @@ export const ProductsPage = () => {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          <Button variant="primary">Primary</Button>
+          <Button variant="primary">Add New Product</Button>
         </div>
 
         <div className="product-listing">
