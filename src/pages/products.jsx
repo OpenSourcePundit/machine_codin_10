@@ -6,18 +6,23 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import Modal from 'react-bootstrap/Modal';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 import "./products.css";
 
 export const ProductsPage = () => {
+    let value="";
 
   const navigate = useNavigate();
   const { department, Data, Departments, setDepartment, sortBy, dispatch } =
     useData();
-    const [show, setShow] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => setShowModal(false);
+    const handleShow = () => setShowModal(true);
+    const addProduct = () => {setShowModal(false)}
 //   const [finalData, setFinalData] = useState(Data);
 
 //   const DepartmentClickHandler = () => {
@@ -170,7 +175,7 @@ export const ProductsPage = () => {
 
           </div>
           
-          <Button variant="primary">Add New Product</Button>
+          <Button variant="primary" onClick={handleShow}>Add New Product</Button>
         </div>
 
         <div className="product-listing">
@@ -198,7 +203,9 @@ export const ProductsPage = () => {
                         }}
                       />
                     </td>
-                    <td>{product.name}</td>
+                    <td style={{cursor:'pointer'}} onClick={() => {
+                          navigate(`/products/${product.id}`);
+                        }}>{product.name}</td>
                     <td>{product.description}</td>
                     <td>{product.price}</td>
                     <td>{product.stock}</td>
@@ -209,6 +216,84 @@ export const ProductsPage = () => {
             </tbody>
           </Table>
         </div>
+
+        {/* Add New Product Modal Modal  */}
+        <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add New Product</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+
+
+        <InputGroup className="mb-3">
+        <DropdownButton
+          variant="outline-secondary"
+          title="Dropdown"
+          id="input-group-dropdown-1"
+        >
+          {Departments.map((dep)=><Dropdown.Item onClick={()=>setDepartment(dep)} >{dep}</Dropdown.Item>)}
+        </DropdownButton>{console.log("val aa rhe ",value)}
+        <Form.Control aria-label="dropdown button" type = 'text' disabled placeholder={`${department}`}  />
+        
+      </InputGroup>
+      {/* <Form.Control  type = 'text' placeholder={`${department}`}  /> */}
+
+      <Form.Label htmlFor="name">Name</Form.Label>
+      <Form.Control
+        type="text"
+        id="name"
+      />
+      <Form.Label htmlFor="Description">Description</Form.Label>
+      <Form.Control
+        type="text"
+        id="Description"
+      />
+      <Form.Label htmlFor="Price">Price</Form.Label>
+      <Form.Control
+        type="number"
+        id="Price"
+        aria-describedby="passwordHelpBlock"
+      />
+      <Form.Label htmlFor="Stock">Stock</Form.Label>
+      <Form.Control
+        type="number"
+        id="Stock"
+      />
+      <Form.Label htmlFor="SKU">SKU</Form.Label>
+      <Form.Control
+        type="number"
+        id="SKU"
+      />
+      <Form.Label htmlFor="Supplier">Supplier</Form.Label>
+      <Form.Control
+        type="text"
+        id="Supplier"
+      />
+      <Form.Label htmlFor="Delivered">Delivered</Form.Label>
+      <Form.Control
+        placeholder="0"
+        type="number"
+        id="Delivered"
+        disabled
+      />
+      <Form.Label htmlFor="ImageURL">ImageURL</Form.Label>
+      <Form.Control
+        type="text"
+        id="ImageURL"
+      />
+
+
+            
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={addProduct}>
+            Add Product
+          </Button>
+        </Modal.Footer>
+      </Modal>
       </div>
     </div>
   );
