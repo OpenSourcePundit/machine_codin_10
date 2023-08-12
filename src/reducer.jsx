@@ -21,9 +21,10 @@ export const Reducer = (state,{type,payload}) =>{
             };
             
             case "showstate":
-            console.log("statereducer 27",state);
+                console.log("statereducer 27",state)
+            return{}
 
-        default: 
+            default: 
             return state;
  }
 

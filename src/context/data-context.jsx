@@ -144,7 +144,7 @@ export const DataProvider = ({children}) =>{
             'https://m.media-amazon.com/images/I/41dMtEjU3IL._AC_UF894,1000_QL80_.jpg',
         },
       ],
-     Departments:['Kitchen','Clothing','Toys'],sortBy:"",
+     Departments:['Kitchen','Clothing','Toys'],sortBy:"none",
 
     }
 

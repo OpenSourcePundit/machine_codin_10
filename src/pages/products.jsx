@@ -5,6 +5,7 @@ import { SideBar } from "../components/sidebar";
 import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
+import Modal from 'react-bootstrap/Modal';
 
 import "./products.css";
 
@@ -13,7 +14,10 @@ export const ProductsPage = () => {
   const navigate = useNavigate();
   const { department, Data, Departments, setDepartment, sortBy, dispatch } =
     useData();
+    const [show, setShow] = useState(false);
 
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 //   const [finalData, setFinalData] = useState(Data);
 
 //   const DepartmentClickHandler = () => {
@@ -58,6 +62,7 @@ export const ProductsPage = () => {
                 return a.stock - b.stock;
                 
               });break;
+              case "none": finalDataS=finalDataD;break;
         }
         
 
@@ -65,7 +70,7 @@ export const ProductsPage = () => {
   return (
     <div className="main-container">
       <div className="sidebar">{<SideBar />}</div>
-      <div className="main-section">
+      <div className="main-sectionp">
         <div className="topBar">
           <h1 className="prodname">Products</h1>
           <Dropdown>
@@ -149,6 +154,16 @@ export const ProductsPage = () => {
                 }}
               >
                 Stock
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => {
+                  dispatch({
+                    type: "Sort",
+                    payload: "none",
+                  });
+                }}
+              >
+                None
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
