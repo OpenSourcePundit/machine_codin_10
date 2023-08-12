@@ -38,7 +38,13 @@ export const ProductsPage = () => {
          switch(sortBy){
             case "": finalDataS=finalDataD; break;
             case "name": finalDataS=finalDataD.sort(function (a, b) {
-                return a.name - b.name;
+                if (a.name < b.name) {
+                    return -1;
+                  }
+                  if (a.name > b.name) {
+                    return 1;
+                  }
+                  return 0;
               });break;
               case "price": finalDataS=finalDataD.sort(function (a, b) {
                 return a.price - b.price;
@@ -101,6 +107,8 @@ export const ProductsPage = () => {
             <input value="One" type="checkbox" />
             <span> Low Stock </span>
           </div>
+          <div className="sortBy">
+            <label >Sort By  :</label>
           <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-basic">
               {sortBy}
@@ -139,6 +147,9 @@ export const ProductsPage = () => {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
+
+          </div>
+          
           <Button variant="primary">Add New Product</Button>
         </div>
 

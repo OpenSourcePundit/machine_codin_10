@@ -19,6 +19,9 @@
     display: flex;
     justify-content:space-between;
 }
+.sortBy{
+    display: flex;
+}
 .photo {
     height: 50px;
     width: 50px; 
